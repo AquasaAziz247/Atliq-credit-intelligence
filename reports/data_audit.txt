@@ -1,0 +1,234 @@
+ATLIQ CREDIT INTELLIGENCE
+RAW DATASET AUDIT REPORT
+Project root: .
+Datasets folder: data/raw
+
+========================================================================
+DATASET: customers.csv
+========================================================================
+Rows: 50,000
+Columns: 12
+
+COLUMN DATA TYPES
+----------------------------------------
+cust_id                       str
+age                         int64
+gender                        str
+marital_status                str
+employment_status             str
+income                      int64
+number_of_dependants        int64
+residence_type                str
+years_at_current_address    int64
+city                          str
+state                         str
+zipcode                     int64
+
+MISSING VALUES
+----------------------------------------
+cust_id                      0
+age                          0
+gender                       0
+marital_status               0
+employment_status            0
+income                       0
+number_of_dependants         0
+residence_type              62
+years_at_current_address     0
+city                         0
+state                        0
+zipcode                      0
+Total missing cells: 62
+
+DUPLICATE ROWS
+----------------------------------------
+Exact duplicate rows: 0
+
+NUMERIC SUMMARY
+----------------------------------------
+                age        income  number_of_dependants  years_at_current_address        zipcode
+count  50000.000000  5.000000e+04          50000.000000              50000.000000   50000.000000
+mean      39.550980  2.640898e+06              1.939540                 16.018440  419090.860000
+std        9.847752  2.629441e+06              1.535517                  8.926489  168982.674047
+min       18.000000  0.000000e+00              0.000000                  1.000000  110001.000000
+25%       33.000000  8.030000e+05              0.000000                  8.000000  302001.000000
+50%       40.000000  1.892000e+06              2.000000                 16.000000  400001.000000
+75%       46.000000  3.332250e+06              3.000000                 24.000000  560001.000000
+max       70.000000  1.199900e+07              5.000000                 31.000000  700001.000000
+
+========================================================================
+DATASET: loans.csv
+========================================================================
+Rows: 50,000
+Columns: 15
+
+COLUMN DATA TYPES
+----------------------------------------
+loan_id                            str
+cust_id                            str
+loan_purpose                       str
+loan_type                          str
+sanction_amount                  int64
+loan_amount                      int64
+processing_fee                 float64
+gst                              int64
+net_disbursement                 int64
+loan_tenure_months               int64
+principal_outstanding            int64
+bank_balance_at_application      int64
+disbursal_date                     str
+installment_start_dt               str
+default                           bool
+
+MISSING VALUES
+----------------------------------------
+loan_id                        0
+cust_id                        0
+loan_purpose                   0
+loan_type                      0
+sanction_amount                0
+loan_amount                    0
+processing_fee                 0
+gst                            0
+net_disbursement               0
+loan_tenure_months             0
+principal_outstanding          0
+bank_balance_at_application    0
+disbursal_date                 0
+installment_start_dt           0
+default                        0
+Total missing cells: 0
+
+DUPLICATE ROWS
+----------------------------------------
+Exact duplicate rows: 0
+
+NUMERIC SUMMARY
+----------------------------------------
+       sanction_amount   loan_amount  processing_fee           gst  net_disbursement  loan_tenure_months  principal_outstanding  bank_balance_at_application
+count     5.000000e+04  5.000000e+04    5.000000e+04  5.000000e+04      5.000000e+04        50000.000000           5.000000e+04                 5.000000e+04
+mean      4.704828e+06  3.999679e+06    8.049471e+04  7.199422e+05      3.199743e+06           25.940520           1.337636e+06                 9.891264e+05
+std       6.267276e+06  5.376552e+06    1.173123e+05  9.677794e+05      4.301242e+06           12.433163           1.214714e+06                 1.046072e+06
+min       0.000000e+00  0.000000e+00    0.000000e+00  0.000000e+00      0.000000e+00            6.000000          -1.000000e+00                 0.000000e+00
+25%       1.147000e+06  9.670000e+05    1.934000e+04  1.740600e+05      7.736000e+05           16.000000           4.247990e+05                 2.870075e+05
+50%       2.656000e+06  2.240000e+06    4.480000e+04  4.032000e+05      1.792000e+06           24.000000           1.002309e+06                 6.685250e+05
+75%       5.172250e+06  4.611000e+06    9.224000e+04  8.299800e+05      3.688800e+06           35.000000           1.790751e+06                 1.238667e+06
+max       5.217500e+07  4.781900e+07    5.698030e+06  8.607420e+06      3.825520e+07           59.000000           5.000000e+06                 7.846643e+06
+
+TARGET COLUMN CHECK
+----------------------------------------
+Target column 'default' found.
+Target value counts, including missing values:
+default
+False    45703
+True      4297
+
+Target proportions:
+default
+False    0.91406
+True     0.08594
+
+========================================================================
+DATASET: bureau_data.csv
+========================================================================
+Rows: 50,000
+Columns: 8
+
+COLUMN DATA TYPES
+----------------------------------------
+cust_id                        str
+number_of_open_accounts      int64
+number_of_closed_accounts    int64
+total_loan_months            int64
+delinquent_months            int64
+total_dpd                    int64
+enquiry_count                int64
+credit_utilization_ratio     int64
+
+MISSING VALUES
+----------------------------------------
+cust_id                      0
+number_of_open_accounts      0
+number_of_closed_accounts    0
+total_loan_months            0
+delinquent_months            0
+total_dpd                    0
+enquiry_count                0
+credit_utilization_ratio     0
+Total missing cells: 0
+
+DUPLICATE ROWS
+----------------------------------------
+Exact duplicate rows: 0
+
+NUMERIC SUMMARY
+----------------------------------------
+       number_of_open_accounts  number_of_closed_accounts  total_loan_months  delinquent_months     total_dpd  enquiry_count  credit_utilization_ratio
+count             50000.000000                50000.00000       50000.000000        50000.00000  50000.000000   50000.000000               50000.00000
+mean                  2.500140                    1.00106          76.127140            4.87890     26.858000       5.009340                  43.36142
+std                   1.118725                    0.81412          43.762469            5.85032     32.832832       2.029122                  29.35598
+min                   1.000000                    0.00000           1.000000            0.00000      0.000000       1.000000                   0.00000
+25%                   1.000000                    0.00000          42.000000            0.00000      0.000000       4.000000                  18.00000
+50%                   3.000000                    1.00000          71.000000            3.00000     14.000000       5.000000                  39.00000
+75%                   4.000000                    2.00000         107.000000            9.00000     46.000000       6.000000                  67.00000
+max                   4.000000                    2.00000         223.000000           24.00000    171.000000       9.000000                  99.00000
+
+========================================================================
+RECORD INTEGRITY AND RELATIONSHIP AUDIT
+========================================================================
+
+IDENTIFIER QUALITY
+----------------------------------------
+customers.csv | cust_id
+  Missing IDs: 0
+  Duplicate IDs: 0
+
+loans.csv | loan_id
+  Missing IDs: 0
+  Duplicate IDs: 0
+
+bureau_data.csv | cust_id
+  Missing IDs: 0
+  Duplicate IDs: 0
+
+CROSS-TABLE RELATIONSHIPS
+----------------------------------------
+Distinct customer IDs: 50,000
+Distinct loan customer IDs: 50,000
+Distinct bureau customer IDs: 50,000
+Loan customer IDs absent from customers.csv: 0
+Bureau customer IDs absent from customers.csv: 0
+
+Loan customer IDs also present in bureau_data.csv: 50,000
+
+NOTE: Customer-level overlap does not prove that every loan has a corresponding point-in-time bureau record.
+
+========================================================================
+DATA QUALITY FLAGS
+========================================================================
+
+NUMERIC VALUE FLAGS
+----------------------------------------
+principal_outstanding: 8 flagged rows
+sanction_amount: 0 flagged rows
+loan_amount: 0 flagged rows
+processing_fee: 0 flagged rows
+gst: 0 flagged rows
+net_disbursement: 0 flagged rows
+loan_tenure_months: 0 flagged rows
+bank_balance_at_application: 0 flagged rows
+
+DATE VALIDATION
+----------------------------------------
+disbursal_date: 0 unparseable or missing dates
+installment_start_dt: 0 unparseable or missing dates
+Installment starts before disbursal: 0 rows
+
+NOTE: Flags identify records for investigation; they do not establish that a value is incorrect.
+
+NEGATIVE BALANCE INVESTIGATION
+----------------------------------------
+Flagged loan count: 8
+Flagged loan IDs: L02279, L04951, L11093, L13357, L27458, L45225, L46641, L47429
+Flagged rows with zero loan_amount: 8
+Interpretation: unresolved. The -1 value may be a sentinel, but dataset documentation is unavailable.
