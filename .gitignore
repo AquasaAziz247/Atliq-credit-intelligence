@@ -29,3 +29,6 @@ htmlcov/
 .vscode/
 .DS_Store
 Thumbs.db
+
+# Generated interactive EDA charts
+reports/figures/*.html
