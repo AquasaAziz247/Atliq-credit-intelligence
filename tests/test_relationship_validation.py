@@ -90,10 +90,70 @@ def test_binary_target_rejects_missing_labels():
 
 def test_binary_target_rejects_unexpected_values():
     df = pd.DataFrame({"default": [0, 2]})
-    with pytest.raises(ValueError, match="only Boolean or 0/1"):
+    with pytest.raises(ValueError, match="only Boolean or integer 0/1"):
         validate_binary_target(df)
 
 
 def test_binary_target_rejects_missing_target_column():
     with pytest.raises(ValueError, match="Missing target column"):
         validate_binary_target(pd.DataFrame({"other": [0, 1]}))
+
+
+def test_binary_target_rejects_empty_dataframe():
+    import pandas as pd
+    import pytest
+
+    from src.relationship_validation import validate_binary_target
+
+    df = pd.DataFrame({"default": pd.Series([], dtype="bool")})
+
+    with pytest.raises(ValueError, match="must not be empty"):
+        validate_binary_target(df)
+
+
+def test_binary_target_rejects_float_values():
+    import pandas as pd
+    import pytest
+
+    from src.relationship_validation import validate_binary_target
+
+    df = pd.DataFrame({"default": [0.0, 1.0]})
+
+    with pytest.raises(ValueError, match="Boolean or integer 0/1"):
+        validate_binary_target(df)
+
+
+def test_binary_target_rejects_string_values():
+    import pandas as pd
+    import pytest
+
+    from src.relationship_validation import validate_binary_target
+
+    df = pd.DataFrame({"default": ["0", "1"]})
+
+    with pytest.raises(ValueError, match="only Boolean or integer 0/1"):
+        validate_binary_target(df)
+
+
+def test_referential_integrity_rejects_duplicate_parent_keys():
+    child = pd.DataFrame({"cust_id": ["C001"]})
+    parent = pd.DataFrame({"cust_id": ["C001", "C001"]})
+
+    with pytest.raises(ValueError, match="duplicate"):
+        validate_referential_integrity(child, parent)
+
+
+def test_validated_left_join_rejects_missing_left_keys():
+    left = pd.DataFrame({"cust_id": [None], "loan_id": ["L001"]})
+    right = pd.DataFrame({"cust_id": ["C001"], "income": [50000]})
+
+    with pytest.raises(ValueError, match="missing"):
+        validated_left_join(left, right)
+
+
+def test_validated_left_join_rejects_missing_right_keys():
+    left = pd.DataFrame({"cust_id": ["C001"], "loan_id": ["L001"]})
+    right = pd.DataFrame({"cust_id": [None], "income": [50000]})
+
+    with pytest.raises(ValueError, match="missing"):
+        validated_left_join(left, right)
