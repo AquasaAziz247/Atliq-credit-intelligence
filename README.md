@@ -2,7 +2,7 @@
 
 An educational credit-risk analytics and machine-learning portfolio project focused on data quality, exploratory analysis, feature availability, and leakage prevention.
 
-> **Project status:** Data audit, initial EDA, and preliminary feature-risk investigation are complete. Target semantics and feature collection timing remain unresolved. No model has been trained.
+> **Project status:** Data audit, EDA, data validation, baseline classification experiments, and a class-weighting comparison are complete. Target semantics, feature collection timing, and the validity of future-default prediction remain unresolved. The current results are educational experiments and do not establish a validated lending model.
 
 ## Objectives
 
