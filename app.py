@@ -5,10 +5,8 @@ import pandas as pd
 import streamlit as st
 
 from src.baseline_experiment import FEATURES
-from src.model_inference import (
-    predict_positive_probability,
-    train_inference_model,
-)
+from src.model_inference import predict_positive_probability
+from src.model_artifact import load_model_artifact
 from src.scorecard import probability_to_score, score_to_category
 
 st.set_page_config(
@@ -68,12 +66,12 @@ with st.form("applicant_form"):
 
 @st.cache_resource
 def get_inference_model():
-    return train_inference_model()
+    return load_model_artifact()
 
 
 if submitted:
     try:
-        with st.spinner("Preparing the baseline model..."):
+        with st.spinner("Loading the local baseline model artifact..."):
             model = get_inference_model()
 
         applicant = pd.DataFrame(
@@ -128,5 +126,5 @@ if submitted:
         )
 
 
-    except (ValueError, TypeError, KeyError) as exc:
+    except (FileNotFoundError, ValueError, TypeError, KeyError) as exc:
         st.error(f"Could not generate the experimental output: {exc}")

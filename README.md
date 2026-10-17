@@ -92,13 +92,21 @@ The full test suite passed **50 tests** during the Day 12 clean-environment veri
 
 ## Run the Streamlit prototype
 
-From the project root, with the virtual environment activated:
+From the project root, with the virtual environment activated, ensure `data/raw/customers.csv` and `data/raw/loans.csv` exist locally. Generate the baseline inference artifact first:
+
+```powershell
+python -m src.model_artifact
+```
+
+Then launch the application:
 
 ```powershell
 python -m streamlit run app.py
 ```
 
-The application accepts five baseline features and displays an experimental positive-class probability. It uses a baseline logistic-regression pipeline trained on the established fit partition.
+The artifact is saved to `models/baseline_inference_pipeline.joblib`, which is excluded from version control. Generate it separately in each environment. The app loads this saved pipeline for predictions and does not need the raw CSV files at prediction time. Only load trusted artifacts.
+
+The application accepts five baseline features and displays an experimental positive-class probability. The pipeline is fitted through the established training function using the existing fit partition.
 
 **Important:** The displayed value is not a validated or calibrated estimate of future loan default. It must not be used to approve or reject a loan.
 
