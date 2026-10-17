@@ -1,25 +1,28 @@
 # AtliQ Credit Intelligence
 
-An educational credit-risk analytics and machine-learning portfolio project focused on data quality, exploratory analysis, feature availability, and leakage prevention.
+An educational credit-risk analytics and machine-learning portfolio project focused on data quality, exploratory analysis, leakage prevention, baseline classification, and an initial Streamlit inference prototype.
 
-> **Project status:** Data audit, EDA, data validation, baseline classification experiments, and a class-weighting comparison are complete. Target semantics, feature collection timing, and the validity of future-default prediction remain unresolved. The current results are educational experiments and do not establish a validated lending model.
+> **Project status:** Data auditing, exploratory data analysis, data-contract validation, baseline classification experiments, and a class-weighting comparison are complete. A reusable inference module and Streamlit prototype have been added. Target semantics, feature collection timing, and the validity of future-default prediction remain unresolved. The project is educational and is not a validated lending or credit-scoring system.
 
 ## Objectives
 
 - Audit customer, loan, and bureau datasets.
-- Explore loan and default-label patterns.
+- Explore loan and supplied default-label patterns.
 - Document suspicious records and unresolved data-quality questions.
 - Assess whether candidate features could be available at the proposed prediction point.
-- Develop reproducible, tested preprocessing utilities.
-- Establish a defensible foundation for any later modeling.
+- Develop reproducible, tested data-validation and inference utilities.
+- Compare baseline classification experiments without overstating their results.
+- Provide an interactive interface for exploring experimental model outputs.
 
 ## Technology
 
-- Python
+- Python 3.13
 - pandas
 - NumPy
+- scikit-learn
 - Plotly
 - pytest
+- Streamlit
 - Git
 
 ## Project structure
@@ -28,22 +31,36 @@ An educational credit-risk analytics and machine-learning portfolio project focu
 atliq-credit-intelligence/
 ├── data/
 │   └── raw/                 # Local source CSV files; not committed
-├── docs/
-│   └── day_03_decision_log.md
+├── docs/                    # Day-by-day decisions, evidence and limitations
 ├── notebooks/
 │   ├── day_02_eda.ipynb
 │   └── day_03_feature_engineering_leakage_audit.ipynb
 ├── reports/
-│   └── data_audit.txt
+│   ├── data_audit.txt
+│   └── day_10_class_weighting_results.txt
 ├── src/
 │   ├── audit_data.py
+│   ├── baseline_experiment.py
+│   ├── class_weighting_experiment.py
+│   ├── contract_validation.py
+│   ├── data_contracts.py
 │   ├── eda.py
-│   └── preprocessing.py
+│   ├── model_inference.py
+│   ├── preprocessing.py
+│   └── ...
 ├── tests/
-│   └── test_preprocessing.py
+│   ├── test_baseline_experiment.py
+│   ├── test_class_weighting_experiment.py
+│   ├── test_contract_validation.py
+│   ├── test_model_inference.py
+│   ├── test_preprocessing.py
+│   └── ...
+├── app.py
 ├── requirements.txt
 └── README.md
 ```
+
+The ellipses indicate additional existing source files, tests, and documentation. This is a representative structure, not an exhaustive file listing.
 
 ## Local setup
 
@@ -57,9 +74,9 @@ python -m venv .venv
 python -m pip install -r requirements.txt
 ```
 
-The raw CSV files are not included in version control. Place the expected files in `data/raw/` before running the audit and EDA scripts.
+The raw CSV files are not included in version control. Place the expected files in `data/raw/` before running scripts that require the source datasets.
 
-## Run the audit
+## Run the data audit
 
 ```powershell
 python src/audit_data.py
@@ -70,6 +87,20 @@ python src/audit_data.py
 ```powershell
 python -m pytest -v
 ```
+
+The full test suite passed **50 tests** during the Day 12 clean-environment verification.
+
+## Run the Streamlit prototype
+
+From the project root, with the virtual environment activated:
+
+```powershell
+python -m streamlit run app.py
+```
+
+The application accepts five baseline features and displays an experimental positive-class probability. It uses a baseline logistic-regression pipeline trained on the established fit partition.
+
+**Important:** The displayed value is not a validated or calibrated estimate of future loan default. It must not be used to approve or reject a loan.
 
 ## Data findings
 
@@ -87,12 +118,34 @@ Initial investigations identified:
 
 These are observations, not proof that the flagged records are erroneous or that the observed formula represents a real banking rule.
 
+## Modeling and validation
+
+The project includes baseline logistic-regression experiments, a class-weighting comparison, and a reusable inference path.
+
+The current baseline uses these five features:
+
+- `age`
+- `income`
+- `number_of_dependants`
+- `years_at_current_address`
+- `bank_balance_at_application`
+
+The inference function fits the model on the established fit partition rather than the validation or reserved test partitions. The current application does not perform new feature engineering, threshold tuning, or model selection.
+
+The project has not demonstrated that the original assignment's precision and recall requirements have been satisfied. Model outputs and experimental metrics should be interpreted in the context of the documented data and evaluation limitations.
+
 ## Important limitations
 
-The dataset's target-generation logic, default observation horizon, and feature timestamps are undocumented. The proposed prediction point is before loan approval or disbursement, but feature eligibility has not been verified.
+The dataset's target-generation logic, default observation horizon, label maturity, and feature timestamps are undocumented. Although the proposed prediction point is before loan approval or disbursement, feature eligibility has not been verified.
 
-Fields that may reflect post-decision or later account information will not be treated as valid predictors without supporting evidence. This project is an educational prototype, not a validated lending system.
+The supplied `default` label has not been established as a reliable future-default outcome for a defined prediction horizon. A positive-class probability therefore must not be presented as a validated future-default probability.
 
-## Current validation
+Fields that may reflect post-decision or later account information will not be treated as valid predictors without supporting evidence.
 
-The preprocessing utility has four passing tests covering flag generation, preservation of the input DataFrame, required-column validation, and edge cases.
+This project is an educational portfolio prototype, not a validated lending system. It is not intended for real credit decisions.
+
+## Project documentation
+
+The `docs/` directory contains the project's day-by-day decisions, data-readiness reviews, modeling experiments, requirements, evidence, and prototype limitations. Consult those documents for the detailed reasoning and experiment-specific results.
+
+See also: [Day 13: Educational Scorecard Integration](docs/day_13_scorecard.md).
